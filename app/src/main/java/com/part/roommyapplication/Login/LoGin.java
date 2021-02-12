@@ -94,7 +94,7 @@ public class LoGin extends Fragment {
         email = v.findViewById(R.id.uname);
         pwd = v.findViewById(R.id.pwd);
         btnLogin = v.findViewById(R.id.btn_login);
-        btnFacebook = v.findViewById(R.id.btn_facebook);
+        btnFacebook = v.findViewById(R.id.btn_facebookRes);
         //Call
         mCallbackManager = CallbackManager.Factory.create();
 
@@ -117,7 +117,7 @@ public class LoGin extends Fragment {
             }
         });
 
-        btnGoogle = v.findViewById(R.id.btn_google);
+        btnGoogle = v.findViewById(R.id.btn_googleRegis);
         String text = "Create a new Account SIGN UP";
         SpannableString sSignUp = new SpannableString(text);
         ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.BLUE);

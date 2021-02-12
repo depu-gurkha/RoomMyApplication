@@ -135,7 +135,7 @@
             </RelativeLayout>
 
             <Button
-                android:id="@+id/btn_google"
+                android:id="@+id/btn_googleRegis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -149,7 +149,7 @@
                 app:backgroundTint="#314879" />
 
             <com.facebook.login.widget.LoginButton
-                android:id="@+id/btn_facebook"
+                android:id="@+id/btn_facebookRes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

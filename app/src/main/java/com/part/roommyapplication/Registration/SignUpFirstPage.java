@@ -1,5 +1,6 @@
 package com.part.roommyapplication.Registration;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -26,8 +27,23 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.part.roommyapplication.Dashboard;
 import com.part.roommyapplication.Login.LoGin;
+import com.part.roommyapplication.LoginRegistrationActivity;
 import com.part.roommyapplication.R;
 import com.part.roommyapplication.config.RequestSingletonVolley;
 import com.part.roommyapplication.config.SharedPrefManager;
@@ -39,6 +55,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 
 public class SignUpFirstPage extends Fragment {
@@ -46,8 +63,13 @@ public class SignUpFirstPage extends Fragment {
     TextView tvSignin;
     TextInputLayout lFirstName, lLastName, lPhone, lEmail;
     EditText etEmail, etFstName, etLstName, etPhone;
-    Button btnSignUp, btnGoogle, btnFacebook;
+    Button btnSignUp, btnGoogle;
+    LoginButton btnFacebook;
     public FragmentManager fragmentManager;
+    FirebaseAuth mAuth;
+    private CallbackManager mCallbackManager;
+    private static final String EMAIL = "email";
+    private static final String TAG="FACELOG";
 
     public SignUpFirstPage() {
         // Required empty public constructor
@@ -69,7 +91,39 @@ public class SignUpFirstPage extends Fragment {
         etLstName = v.findViewById(R.id.lName);
         etPhone = v.findViewById(R.id.phone);
         btnSignUp = v.findViewById(R.id.btn_signUp);
+        btnGoogle =v.findViewById(R.id.btn_googleRegis);
+        btnFacebook=v.findViewById(R.id.btn_facebookRes);
 
+        mCallbackManager = CallbackManager.Factory.create();
+
+        btnFacebook.setReadPermissions("email", "public_profile");
+        btnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+            }
+        });
+
+        btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginRegistrationActivity activity = (LoginRegistrationActivity) getActivity();
+                if (activity instanceof LoginRegistrationActivity) {
+                    activity.signIn();
+                }
+            }
+        });
         //For already registred along with on click to take back to the signin page
         String text = "Already Registered? Sign In";
         SpannableString sSignIn = new SpannableString(text);
@@ -212,6 +266,59 @@ public class SignUpFirstPage extends Fragment {
         };
 
         RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser !=null){
+            updateUI();
+        }
+//        updateUI(currentUser);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("yoho", "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("yoho", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(getContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    private void updateUI(){
+
+        Toast.makeText(getContext(),"You are Logged in",Toast.LENGTH_SHORT).show();
+        Intent accountIntent= new Intent(getContext(), Dashboard.class);
+        startActivity(accountIntent);
+
     }
 }
 
