@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">RoomMyApplication</string>
+    <string name="fb_login_protocol_scheme">fb642422099785638</string>
+    <string name="facebook_app_id">642422099785638</string>
+    <string-array name="Gender">
+        <item>Select gender</item>
+        <item>Male</item>
+        <item>Female</item>
+
+    </string-array>
+    <string-array name="classStudied">
+        <item>Select class</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="stream">
+        <item>Select Stream</item>
+        <item>N/A</item>
+        <item>Science</item>
+        <item>Arts</item>
+        <item>Commerce</item>
+    </string-array>
+</resources>

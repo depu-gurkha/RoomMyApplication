@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="5dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:context=".Registration.VerifyOTP">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="Please enter the OTP"
+                android:textSize="30sp"
+                android:textStyle="bold"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/firstNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="30sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/secondNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/thirdNumber"
+                    android:textSize="30sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/thirdNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/fourthNumber"
+                    android:textSize="30sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/fourthNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/fifthNumber"
+                    android:textSize="30sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/fifthNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:nextFocusRight="@id/sixthNumber"
+                    android:textSize="30sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/sixthNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/otp_verify_edit_text"
+                    android:editable="true"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="30sp">
+
+                </EditText>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_verify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/cutsom_button"
+                android:fontFamily="@font/raleway"
+                android:text="Verify otp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvResend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:fontFamily="@font/raleway"
+                android:gravity="center"
+                android:text="You can generate new code Resend"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardWaiting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:elevation="0dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="#f8f9fa">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:gravity="center"
+                android:text="PLEASE WAIT !"
+                android:textSize="40sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="RKMHIKAI sending verification to"
+                android:textSize="25sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/etPhoneEdit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:drawableEnd="@drawable/edit"
+                android:drawablePadding="20dp"
+                android:gravity="center"
+                android:paddingEnd="20dp"
+                android:text="Dummy"
+                android:textSize="30sp"></EditText>
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:src="@drawable/progress"></pl.droidsonroids.gif.GifImageView>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+
+
+
+
+
