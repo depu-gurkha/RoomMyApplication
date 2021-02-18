@@ -44,7 +44,6 @@ public class Vitalinfo extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -210,7 +209,6 @@ public class Vitalinfo extends Fragment {
                 params.put("district", "East kahsi hills");
                 params.put("pincode","793004");
                 params.put("userID",userId);
-
                 return params;
             }
         };

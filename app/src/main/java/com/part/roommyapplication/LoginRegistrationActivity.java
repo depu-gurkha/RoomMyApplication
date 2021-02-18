@@ -2,6 +2,7 @@ package com.part.roommyapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.part.roommyapplication.Login.LoGin;
+import com.part.roommyapplication.Registration.SignUpFirstPage;
 import com.part.roommyapplication.Registration.UploadImage;
+import com.part.roommyapplication.Registration.VerifyOTP;
 
 public class LoginRegistrationActivity extends AppCompatActivity {
 
@@ -35,9 +38,14 @@ public class LoginRegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private int RC_SIGN_IN=1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+        //Making the activity full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_registration);
         mAuth=FirebaseAuth.getInstance();
         //Call
@@ -54,11 +62,12 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                 return;
             }
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            LoGin loGin = new LoGin();
+            // loGin = new LoGin();
             //Vitalinfo vitalinfo=new Vitalinfo();
-            // SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
+//             SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
+            VerifyOTP verifyOTP=new VerifyOTP();
             UploadImage uploadImage = new UploadImage();
-            fragmentTransaction.add(R.id.fragment_container, loGin, null);
+            fragmentTransaction.add(R.id.fragment_container, verifyOTP, null);
             fragmentTransaction.commit();
 
         }

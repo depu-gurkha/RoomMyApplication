@@ -49,6 +49,7 @@ import com.part.roommyapplication.Registration.SignUpFirstPage;
 import com.part.roommyapplication.config.RequestSingletonVolley;
 import com.part.roommyapplication.config.SharedPrefManager;
 import com.part.roommyapplication.config.URLs;
+import com.part.roommyapplication.library.Validation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +69,7 @@ public class LoGin extends Fragment {
     FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
     private static final String EMAIL = "email";
-    private static final String TAG="FACELOG";
+    private static final String TAG = "FACELOG";
 
     public LoGin() {
         // Required empty public constructor
@@ -225,76 +226,76 @@ public class LoGin extends Fragment {
         //first getting the values
         final String username = email.getText().toString();
         final String password = pwd.getText().toString();
+        if (Validation.isEmpty(lUserName, "Enter a valid Username") | Validation.isValidPassword(lPass, "Please enter a valid Passsword")) {
 
+            //if everything is fine
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.userloginUrl,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-        //if everything is fine
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.userloginUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                            try {
+                                //converting response to json object
+                                JSONObject obj = new JSONObject(response);
+                                Log.d("Server Response", obj.toString());
 
+                                //if no error in response
+                                Log.d("Server Response", String.valueOf(obj.getInt("success")));
+                                if (obj.getInt("success") == 1) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Data Success", Toast.LENGTH_SHORT).show();
 
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            Log.d("Server Response", obj.toString());
+                                    //getting the user from the response
+                                    JSONObject userJson = obj.getJSONObject("data");
+                                    Log.d("data", userJson.toString());
+                                    //creating a new user object
+                                    User user = new User(
+                                            userJson.getString("email"),
+                                            userJson.getString("session_id"),
+                                            userJson.getString("firstName") + userJson.getString("lastName"),
+                                            userJson.getString("userType"),
+                                            userJson.getString("stream"),
+                                            userJson.getString("gender"),
+                                            userJson.getString("dateOfBirth"),
+                                            userJson.getString("profilepicture"),
+                                            userJson.getString("accesstoken"),
+                                            userJson.getString("refreshtoken"),
+                                            userJson.getString("access_token_expires_in"),
+                                            userJson.getString("class")
 
-                            //if no error in response
-                            Log.d("Server Response", String.valueOf(obj.getInt("success")));
-                            if (obj.getInt("success") == 1) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Data Success", Toast.LENGTH_SHORT).show();
+                                    );
+                                    Log.d("ouruser", user.getName().toString());
 
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("data");
-                                Log.d("data", userJson.toString());
-                                //creating a new user object
-                                User user = new User(
-                                        userJson.getString("email"),
-                                        userJson.getString("session_id"),
-                                        userJson.getString("firstName") + userJson.getString("lastName"),
-                                        userJson.getString("userType"),
-                                        userJson.getString("stream"),
-                                        userJson.getString("gender"),
-                                        userJson.getString("dateOfBirth"),
-                                        userJson.getString("profilepicture"),
-                                        userJson.getString("accesstoken"),
-                                        userJson.getString("refreshtoken"),
-                                        userJson.getString("access_token_expires_in"),
-                                        userJson.getString("class")
+                                    //storing the user in shared preferences
+                                    SharedPrefManager.getInstance(getActivity().getApplicationContext()).userLogin(user);
 
-                                );
-                                Log.d("ouruser", user.getName().toString());
-
-                                //storing the user in shared preferences
-                                SharedPrefManager.getInstance(getActivity().getApplicationContext()).userLogin(user);
-
-                                //starting the profile activity
-                                getActivity().finish();
-                                startActivity(new Intent(getActivity().getApplicationContext(), Dashboard.class));
-                            } else {
-                                Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                    //starting the profile activity
+                                    getActivity().finish();
+                                    startActivity(new Intent(getActivity().getApplicationContext(), Dashboard.class));
+                                } else {
+                                    Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("userName", username);
-                params.put("password", password);
-                return params;
-            }
-        };
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("userName", username);
+                    params.put("password", password);
+                    return params;
+                }
+            };
 
-        RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+            RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+        }
     }
 
     @Override
@@ -303,11 +304,12 @@ public class LoGin extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser !=null){
+        if (currentUser != null) {
             updateUI();
         }
 //        updateUI(currentUser);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -328,29 +330,25 @@ public class LoGin extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("yoho", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI();
                         }
+                        updateUI();
 
                         // ...
                     }
                 });
     }
 
-    private void updateUI(){
+    private void updateUI() {
 
-        Toast.makeText(getContext(),"You are Logged in",Toast.LENGTH_SHORT).show();
-        Intent accountIntent= new Intent(getContext(),Dashboard.class);
+        Toast.makeText(getContext(), "You are Logged in", Toast.LENGTH_SHORT).show();
+        Intent accountIntent = new Intent(getContext(), Dashboard.class);
         startActivity(accountIntent);
 
     }
-
-
-
 
 }

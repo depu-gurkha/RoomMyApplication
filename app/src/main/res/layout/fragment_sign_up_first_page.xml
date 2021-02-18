@@ -15,7 +15,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/raleway"
             android:text="NEW ENROLMENT"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold">
 
         </TextView>
@@ -31,7 +31,6 @@
                 android:id="@+id/lFname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeWidth="10dp"
                 app:hintEnabled="false"
                 android:layout_marginBottom="10dp">
 
@@ -40,18 +39,18 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/person"
                     android:drawableLeft="@drawable/person"
                     android:drawablePadding="12dp"
                     android:hint="First Name"
-                    android:inputType="text"
+                    android:inputType="textPersonName"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidth="10dp"
-                    app:boxStrokeWidthFocused="10dp"
+                    app:boxStrokeWidthFocused="1dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
@@ -65,7 +64,7 @@
                 android:id="@+id/lLname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeWidth="10dp"
+
                 app:hintEnabled="false"
                 android:layout_marginBottom="10dp">
 
@@ -74,18 +73,18 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/person"
                     android:drawableLeft="@drawable/person"
                     android:drawablePadding="12dp"
                     android:hint="Last Name"
-                    android:inputType="text"
+                    android:inputType="textPersonName"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidth="10dp"
-                    app:boxStrokeWidthFocused="10dp"
+                    app:boxStrokeWidthFocused="1dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
@@ -94,14 +93,10 @@
                 </EditText>
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeWidth="10dp"
                 app:hintEnabled="false"
                 android:layout_marginBottom="10dp">
 
@@ -110,18 +105,18 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/email"
                     android:drawableLeft="@drawable/email"
                     android:drawablePadding="12dp"
                     android:hint="Email Address"
-                    android:inputType="text"
+                    android:inputType="textWebEmailAddress"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidth="10dp"
-                    app:boxStrokeWidthFocused="10dp"
+                    app:boxStrokeWidthFocused="1dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
@@ -136,26 +131,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                app:boxStrokeWidth="10dp"
-                app:hintEnabled="false"
-                >
+                app:hintEnabled="false">
 
                 <EditText
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/phone"
                     android:drawableLeft="@drawable/phone"
                     android:drawablePadding="12dp"
                     android:hint="Phone Number"
-                    android:inputType="text"
+                    android:inputType="number"
+                    android:maxLength="10"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/material_on_primary_emphasis_medium"
                     app:boxStrokeWidth="10dp"
-                    app:boxStrokeWidthFocused="10dp"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:startIconTint="@color/black">
+                </EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:drawableStart="@drawable/password"
+                    android:drawableLeft="@drawable/password"
+                    android:drawablePadding="12dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
+                    app:boxStrokeColor="@color/material_on_primary_emphasis_medium"
+                    app:boxStrokeWidth="10dp"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:startIconTint="@color/black"></EditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lConfirmPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/confirmPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:drawableStart="@drawable/password"
+                    android:drawableLeft="@drawable/password"
+                    android:drawablePadding="12dp"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
+                    app:boxStrokeColor="@color/material_on_primary_emphasis_medium"
+                    app:boxStrokeWidth="10dp"
+                    app:boxStrokeWidthFocused="1dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
@@ -173,9 +226,9 @@
                 android:fontFamily="@font/raleway"
                 android:text="Create your account"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                app:backgroundTint="#@drawable/cutsom_button" />
+                app:backgroundTint="#007bff" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -185,7 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_margin="12dp"
-                    android:background="@android:color/black" />
+                    android:background="@android:color/darker_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -193,6 +246,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@android:color/white"
                     android:padding="2dp"
+                    android:textColor="@color/gray"
                     android:text="OR" />
             </RelativeLayout>
 
@@ -206,7 +260,7 @@
                 android:fontFamily="@font/raleway"
                 android:text="CONTINUE WITH GOOGLE"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:backgroundTint="#314879" />
 
@@ -216,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="10dp"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 />
 
@@ -229,7 +283,7 @@
                 android:gravity="center"
                 android:text="Already Registered? Sign In"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:fontFamily="@font/raleway"
                >
 

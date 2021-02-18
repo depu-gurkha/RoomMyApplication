@@ -1,6 +1,7 @@
 package com.part.roommyapplication.Registration;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -15,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,6 +30,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.part.roommyapplication.R;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class VerifyOTP extends Fragment {
     TextView txtResend;
@@ -34,13 +39,18 @@ public class VerifyOTP extends Fragment {
     public FirebaseAuth mAuth = FirebaseAuth.getInstance();
     CardView cardOTP, cardWaiting;
     String  verificationID;
+    ImageButton iVEdit;
     String otp="";
-
+    GifImageView loading;
+    Button btnSave;
+    private int status=1;
+    String phoneNo;
     public VerifyOTP() {
         // Required empty public constructor
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,19 +63,22 @@ public class VerifyOTP extends Fragment {
         final EditText code4 = v.findViewById(R.id.fourthNumber);
         final EditText code5 = v.findViewById(R.id.fifthNumber);
         final EditText code6 = v.findViewById(R.id.sixthNumber);
+        loading=v.findViewById(R.id.loading);
         btnVerify = v.findViewById(R.id.btn_verify);
         cardOTP = v.findViewById(R.id.cardOTP);
         cardWaiting = v.findViewById(R.id.cardWaiting);
-
+        iVEdit=v.findViewById(R.id.ivButton);
+        btnSave=v.findViewById(R.id.btnSave);
         EditText[] otpTextViews = {code1, code2, code3, code4, code5, code6};
         txtResend = v.findViewById(R.id.tvResend);
         final EditText txtPhone = v.findViewById(R.id.etPhoneEdit);
         Bundle bundle = this.getArguments();
-        String phoneNo = bundle.getString("Phone");
-        Toast.makeText(getContext(), phoneNo, Toast.LENGTH_SHORT).show();
-        Log.d("Phone Number", phoneNo);
-        //txtPhone.setText(phoneNo);
+//         phoneNo = bundle.getString("Phone");
+     //   Toast.makeText(getContext(), phoneNo, Toast.LENGTH_SHORT).show();
+       // Log.d("Phone Number", phoneNo);
+        txtPhone.setText("1234567890");
        // sendVerificationCodeToUser(phoneNo);
+
         String text = "You can generate new code Resend";
         SpannableString sResend = new SpannableString(text);
         ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.BLUE);
@@ -126,6 +139,32 @@ public class VerifyOTP extends Fragment {
                 fragmentTransaction.replace(R.id.fragment_container, vitalinfo, null);
                 fragmentTransaction.commit();
 
+            }
+        });
+        iVEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(status==1) {
+                    status = 0;
+                    txtPhone.setText("");
+                    txtPhone.requestFocus();
+                    loading.setVisibility(View.GONE);
+                    iVEdit.setVisibility(View.GONE);
+                    btnSave.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(status==0){
+                    status=1;
+                    loading.setVisibility(View.VISIBLE);
+                    iVEdit.setVisibility(View.VISIBLE);
+                    phoneNo=txtPhone.getText().toString();
+                    txtPhone.setFocusable(false);
+                    btnSave.setVisibility(View.GONE);
+                }
             }
         });
 

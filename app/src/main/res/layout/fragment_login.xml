@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/raleway"
             android:text="WELCOME BACK"
-            android:textSize="35sp"
+            android:textSize="24sp"
             android:textStyle="bold"></TextView>
 
         <LinearLayout
@@ -30,7 +30,6 @@
                 android:id="@+id/lUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeWidth="10dp"
                 app:hintEnabled="false">
 
                 <EditText
@@ -38,18 +37,18 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/email"
                     android:drawableLeft="@drawable/email"
                     android:drawablePadding="12dp"
                     android:hint="Email Address"
-                    android:inputType="text"
+                    android:inputType="textWebEmailAddress"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidth="10dp"
-                    app:boxStrokeWidthFocused="10dp"
+                    app:boxStrokeWidthFocused="2dp"
                     app:endIconMode="clear_text"
                     app:endIconTint="@color/black"
                     app:hintTextColor="@color/black"
@@ -71,15 +70,15 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@color/white"
                     android:drawableStart="@drawable/password"
                     android:drawableLeft="@drawable/password"
                     android:drawablePadding="12dp"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:padding="10dp"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidthFocused="2dp"
                     app:endIconTint="@color/black"
@@ -98,7 +97,7 @@
                 android:gravity="center"
                 android:text="Forgot Password?"
                 android:textColor="#007bff"
-                android:textSize="20sp">
+                android:textSize="14sp">
 
             </TextView>
 
@@ -109,11 +108,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/cutsom_button"
+                android:backgroundTint="#007bff"
                 android:fontFamily="@font/raleway"
-                android:text="SIGN In"
+                android:text="SIGN IN"
                 android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="#007bff" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_margin="12dp"
-                    android:background="@android:color/black" />
+                    android:background="@android:color/darker_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,6 +132,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="@android:color/white"
                     android:padding="2dp"
+                    android:textColor="@color/gray"
                     android:text="OR" />
             </RelativeLayout>
 
@@ -144,19 +146,19 @@
                 android:fontFamily="@font/raleway"
                 android:text="COntinue with Google"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:backgroundTint="#314879" />
 
             <com.facebook.login.widget.LoginButton
+
                 android:id="@+id/btn_facebookRes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="10dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                 />
+
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvsignup"
@@ -167,7 +169,7 @@
                 android:gravity="center"
                 android:text="Create a new Account SIGN UP"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold">
 
             </TextView>

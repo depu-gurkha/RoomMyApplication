@@ -6,7 +6,6 @@
         <item>Select gender</item>
         <item>Male</item>
         <item>Female</item>
-
     </string-array>
     <string-array name="classStudied">
         <item>Select class</item>
@@ -18,6 +17,11 @@
         <item>6</item>
         <item>7</item>
         <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>Science</item>
+        <item>Commerce</item>
+        <item>Science</item>
     </string-array>
     <string-array name="stream">
         <item>Select Stream</item>

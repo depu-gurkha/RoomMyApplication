@@ -109,13 +109,9 @@ public class UploadImage extends Fragment {
            case 10:
                Log.d("RequestCode",String.valueOf(requestCode));
                Log.d("Result_ok",String.valueOf(requestCode));
-
                if(resultCode== getActivity().RESULT_OK){
                    Log.d("Fired",String.valueOf(requestCode));
                    String path=data.getData().getPath();
-
-
-
 
 //                   File file = new File(file.getAbsolutePath());
 //                   Log.d("our path",file.toString());
