@@ -1,9 +1,11 @@
 package com.part.roommyapplication.Registration;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -23,9 +25,12 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.part.roommyapplication.R;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 
 import java.io.File;
+import java.util.Objects;
 
 
 public class UploadImage extends Fragment {
@@ -50,11 +55,11 @@ public class UploadImage extends Fragment {
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getActivity(), "Clicked" , Toast.LENGTH_SHORT).show();
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("*/*");
-                    startActivityForResult(intent,10);
+                    CropImage.startPickImageActivity(getContext(),UploadImage.this);
+                    Log.d("Crop Image",getActivity().toString());
 
                 } else {
                     requestStoragePermission();
@@ -102,27 +107,40 @@ public class UploadImage extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         super.onActivityResult(requestCode,resultCode,data);
+        Log.d("OnActivity Called", String.valueOf(requestCode));
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
 
-       switch (requestCode){
 
-           case 10:
-               Log.d("RequestCode",String.valueOf(requestCode));
-               Log.d("Result_ok",String.valueOf(requestCode));
-               if(resultCode== getActivity().RESULT_OK){
-                   Log.d("Fired",String.valueOf(requestCode));
-                   String path=data.getData().getPath();
+            Log.d("RequestCode", String.valueOf(requestCode));
+            Log.d("Result_ok", String.valueOf(requestCode));
 
-//                   File file = new File(file.getAbsolutePath());
-//                   Log.d("our path",file.toString());
-                   File dir = Environment.getExternalStorageDirectory();
-                   Glide.with(getActivity()).load(dir).into(pPhoto);
+            if (resultCode ==getActivity().RESULT_OK) {
+                Log.d("Fired", String.valueOf(requestCode));
+                Uri path = CropImage.getPickImageResultUri(Objects.requireNonNull(getContext()), data);
 
-                   //Picasso.with(getActivity().getApplicationContext()).load(file).into(pPhoto);
+                startCrop(path);
 
-               }
-               break;
-       }
+
+            }
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode ==getActivity().RESULT_OK) {
+                Log.d("ForGlide",result.getUri().toString());
+                Glide.with(this).load(result.getUri()).into(pPhoto);
+
+            }
+
+
+        }
+    }
+    private void startCrop(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(getContext(),this);
     }
 
 }

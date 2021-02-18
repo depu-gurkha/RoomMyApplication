@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.facebook.CallbackManager;
+import com.facebook.login.Login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,6 +29,7 @@ import com.part.roommyapplication.Login.LoGin;
 import com.part.roommyapplication.Registration.SignUpFirstPage;
 import com.part.roommyapplication.Registration.UploadImage;
 import com.part.roommyapplication.Registration.VerifyOTP;
+import com.part.roommyapplication.Registration.Vitalinfo;
 
 public class LoginRegistrationActivity extends AppCompatActivity {
 
@@ -62,12 +64,12 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                 return;
             }
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            // loGin = new LoGin();
-            //Vitalinfo vitalinfo=new Vitalinfo();
-//             SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
-            VerifyOTP verifyOTP=new VerifyOTP();
+            LoGin loGin = new LoGin();
+            Vitalinfo vitalinfo=new Vitalinfo();
+            //SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
+            //VerifyOTP verifyOTP=new VerifyOTP();
             UploadImage uploadImage = new UploadImage();
-            fragmentTransaction.add(R.id.fragment_container, verifyOTP, null);
+            fragmentTransaction.add(R.id.fragment_container, uploadImage, null);
             fragmentTransaction.commit();
 
         }

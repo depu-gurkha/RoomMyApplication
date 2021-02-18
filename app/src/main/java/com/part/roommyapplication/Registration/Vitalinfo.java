@@ -112,7 +112,16 @@ public class Vitalinfo extends Fragment {
                 if(parent.getItemAtPosition(position).equals("Select class")){
 
                 }else{
-                    standard=parent.getItemAtPosition(position).toString();
+
+                    standard=parent.getSelectedItem().toString();
+                    if(standard.equals("Class I")|standard.equals("Class II")|standard.equals("Class III")|standard.equals("Class IV")|standard.equals("Class V")|standard.equals("Class VI")
+                    |standard.equals("Class VII")|standard.equals("Class VIII")|standard.equals("Class IX")|standard.equals("Class X")){
+                        sStream.setEnabled(false);
+                        stream="N/A";
+                    }
+                    else{
+                        sStream.setEnabled(true);
+                    }
 
                     Toast.makeText(parent.getContext(), standard, Toast.LENGTH_SHORT).show();
                 }
@@ -177,7 +186,7 @@ public class Vitalinfo extends Fragment {
 //                            if no error in response
                                if (obj.getInt("success") == 1) {
                                 Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
+                                   Toast.makeText(getActivity(), gender+standard+stream+DOB, Toast.LENGTH_SHORT).show();
                                 fragmentManager = getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 UploadImage uploadImage = new UploadImage();

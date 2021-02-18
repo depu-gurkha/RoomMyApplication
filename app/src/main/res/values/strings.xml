@@ -9,19 +9,19 @@
     </string-array>
     <string-array name="classStudied">
         <item>Select class</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>Science</item>
-        <item>Commerce</item>
-        <item>Science</item>
+        <item>Class I</item>
+        <item>Class II</item>
+        <item>Class III</item>
+        <item>Class IV</item>
+        <item>Class V</item>
+        <item>Class VI</item>
+        <item>Class VII</item>
+        <item>Class VIII</item>
+        <item>Class IX</item>
+        <item>Class X</item>
+        <item>Class XI</item>
+        <item>Class XII</item>
+
     </string-array>
     <string-array name="stream">
         <item>Select Stream</item>

@@ -49,13 +49,12 @@ dependencies {
     //Dependency for gif
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
-    //picasso
-
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-
-    //Glide
-
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //implementation of the cropping window
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.android.volley:volley:1.1.1'
 
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.google.firebase:firebase-analytics'
