@@ -1,10 +1,13 @@
 package com.part.roommyapplication.Login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -14,11 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +41,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -70,6 +77,16 @@ public class LoGin extends Fragment {
     private CallbackManager mCallbackManager;
     private static final String EMAIL = "email";
     private static final String TAG = "FACELOG";
+    ImageView icon1;
+
+    private TextView textViewError;
+    private CardView view8Char, viewUppercase, viewNumber, viewSymbol;
+    private RelativeLayout lytVerify;
+    private boolean isAtLeast8 = false, hasUppercase = false, hasNumber = false, hasSymbol = false, isRegistrationClickable = false;
+    LinearProgressIndicator linearProgressIndicator;
+    private int strength ;
+    int progress;
+    RelativeLayout relativeLayout;
 
     public LoGin() {
         // Required empty public constructor
@@ -96,6 +113,28 @@ public class LoGin extends Fragment {
         pwd = v.findViewById(R.id.pwd);
         btnLogin = v.findViewById(R.id.btn_login);
         btnFacebook = v.findViewById(R.id.btn_facebookRes);
+        icon1=v.findViewById(R.id.ivicon1);
+       // textViewError = v.findViewById(R.id.txt_password_error);
+        relativeLayout=v.findViewById(R.id.lyt_password);
+        view8Char = v.findViewById(R.id.lyt_verify_4_icon);
+        viewUppercase = v.findViewById(R.id.lyt_verify_1_icon);
+        viewNumber = v.findViewById(R.id.lyt_verify_2_icon);
+        viewSymbol = v.findViewById(R.id.lyt_verify_3_icon);
+        lytVerify = v.findViewById(R.id.btn_verify);
+        textViewError=v.findViewById(R.id.txt_password);
+        pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View arg0, boolean hasfocus) {
+                if (hasfocus) {
+                    relativeLayout.setVisibility(View.VISIBLE);
+                    inputChange();
+                } else {
+                    Log.e("TAG", "e1 not focused");
+                    relativeLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+        linearProgressIndicator = v.findViewById(R.id.progressIndicator);
         //Call
         mCallbackManager = CallbackManager.Factory.create();
 
@@ -201,25 +240,7 @@ public class LoGin extends Fragment {
             return true;
         }
     }
-    //password Validate
-//    private boolean validatePassword(){
-//        String check="^[0-9]{8,}$";
-//        String strpass=lPass.getEditText().getText().toString().trim();
-//        if(strpass.isEmpty()){
-//            lPass.setErrorIconDrawable(R.drawable.ic_baseline_error_outline_24);
-//            lPass.setError("Field cannot be empty");
-//            return false;
-//        }
-//        else if(!strpass.matches(check)){
-//            lPass.setErrorIconDrawable(R.drawable.ic_baseline_error_outline_24);
-//            lPass.setError("Please enter a validate Password");
-//            return false;
-//        }else
-//            {
-//            lPass.setError(null);
-//            return true;
-//        }
-//    }
+
 
     private void userLogin() {
         //first getting the values
@@ -351,4 +372,105 @@ public class LoGin extends Fragment {
 
     }
 
+    private void inputChange() {
+
+        pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+                registrationDataCheck();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+
+
+
+    @SuppressLint("ResourceType")
+
+    private void registrationDataCheck() {
+        String password=pwd.getText().toString().trim();
+        strength=0;
+        progress =0;
+        if (password.length() >= 8) {
+            isAtLeast8 = true;
+            icon1.setImageResource(R.drawable.com_facebook_button_icon);
+//            view8Char.setCardBackgroundColor(R.color.white);
+            strength++;
+
+        } else {
+            isAtLeast8 = false;
+            icon1.setImageResource(R.drawable.ic_baseline_check_24);
+//            view8Char.setCardBackgroundColor(R.color.com_facebook_blue);
+            //icon1.setImageResource(R.drawable.ic_baseline_check_24);
+
+        }
+        if (password.matches("(.*[a-z].*[A-Z])|([A-Z].*[a-z].*)")) {
+            hasUppercase = true;
+//            viewUppercase.setCardBackgroundColor(Color.GREEN);
+            strength++;
+
+        } else {
+            hasUppercase = false;
+            viewUppercase.setCardBackgroundColor(R.color.light_gray);
+
+        }
+        if (password.matches("(.*[0-9].*)")) {
+            hasNumber = true;
+//            viewNumber.setCardBackgroundColor(Color.GREEN);
+
+            strength++;
+
+        } else {
+            hasNumber = false;
+//            viewNumber.setCardBackgroundColor(R.color.light_gray);
+
+        }
+        if (password.matches(".*[\\^`~<,>\"'}{\\]\\[|)(;&*$%#@!:./?\\\\+=\\-_ ].*")) {
+            hasSymbol = true;
+//            viewSymbol.setCardBackgroundColor(Color.GREEN);
+            strength++;
+
+        } else {
+            hasSymbol = false;
+//            viewSymbol.setCardBackgroundColor(R.color.light_gray);
+
+        }
+        checkStatus();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void checkStatus() {
+        if (strength < 2) {
+            textViewError.setText("Password Strength: Very Weak");
+            progress+=25;
+            linearProgressIndicator.setProgress(progress);
+        } else if (strength == 2) {
+            textViewError.setText("Password Strength: Weak");
+            progress+=50;
+            linearProgressIndicator.setProgress(progress);
+
+        } else if(strength ==3) {
+            textViewError.setText("Password Strength: Strong");
+            progress+=75;
+            linearProgressIndicator.setProgress(progress);
+
+        }else{
+            textViewError.setText("Password Strength: Very Strong");
+            progress+=100;
+            linearProgressIndicator.setProgress(progress);
+        }
+    }
 }
+

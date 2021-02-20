@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.textfield.TextInputLayout;
 import com.part.roommyapplication.R;
 import com.part.roommyapplication.config.RequestSingletonVolley;
 import com.part.roommyapplication.config.SharedPrefManager;
@@ -32,11 +33,12 @@ import java.util.Map;
 public class Vitalinfo extends Fragment {
 
     Spinner sGender,sStream,sClass;
-    TextView txtdte;
+    TextView txtdte,txtclassError,txtStreamError,txtGenderError;
     private DatePickerDialog datePicker;
     private int year, month, day;
     String gender,standard,stream,DOB;
     Button btnSignUp;
+    TextInputLayout dobError;
     public FragmentManager fragmentManager;
 
     public Vitalinfo() {
@@ -54,6 +56,10 @@ public class Vitalinfo extends Fragment {
         sClass=v.findViewById(R.id.sClass);
         txtdte=v.findViewById(R.id.dtepicker);
         btnSignUp=v.findViewById(R.id.btn_signUp);
+        txtGenderError=v.findViewById(R.id.txtGError);
+        txtclassError=v.findViewById(R.id.txtCError);
+        txtStreamError=v.findViewById(R.id.txtSError);
+
         txtdte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +91,7 @@ public class Vitalinfo extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getItemAtPosition(position).equals("Select gender")){
+
 
                 }else{
                      gender=parent.getItemAtPosition(position).toString();
@@ -148,7 +155,6 @@ public class Vitalinfo extends Fragment {
 
                 }else{
                      stream=parent.getItemAtPosition(position).toString();
-
                     Toast.makeText(parent.getContext(), stream, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -173,56 +179,60 @@ public class Vitalinfo extends Fragment {
     //User VitalInfo
 
     private void userVitalInfo() {
-        String userId=String.valueOf(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserId());
-        Log.d("USER ID",userId);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.vitalInfoUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            Log.d("Server Response", obj.toString());
+        if (DOB.isEmpty()|standard.isEmpty()|gender.isEmpty()|stream.isEmpty()) {
+            Toast.makeText(getContext(), "Please select Valid Fields", Toast.LENGTH_SHORT).show();
+        }else{
+            String userId = String.valueOf(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserId());
+            Log.d("USER ID", userId);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.vitalInfoUrl,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                //converting response to json object
+                                JSONObject obj = new JSONObject(response);
+                                Log.d("Server Response", obj.toString());
 //                            if no error in response
-                               if (obj.getInt("success") == 1) {
-                                Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                                   Toast.makeText(getActivity(), gender+standard+stream+DOB, Toast.LENGTH_SHORT).show();
-                                fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                UploadImage uploadImage = new UploadImage();
-                                fragmentTransaction.replace(R.id.fragment_container, uploadImage, null);
-                                fragmentTransaction.commit();
-                            } else {
-                                Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                if (obj.getInt("success") == 1) {
+                                    Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), gender + standard + stream + DOB, Toast.LENGTH_SHORT).show();
+                                    fragmentManager = getFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    UploadImage uploadImage = new UploadImage();
+                                    fragmentTransaction.replace(R.id.fragment_container, uploadImage, null);
+                                    fragmentTransaction.commit();
+                                } else {
+                                    Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("dob", DOB);
-                params.put("gender", gender);
-                params.put("class", standard);
-                params.put("stream", stream);
-                params.put("school","RKM");
-                params.put("address", "sohra");
-                params.put("district", "East kahsi hills");
-                params.put("pincode","793004");
-                params.put("userID",userId);
-                return params;
-            }
-        };
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("dob", DOB);
+                    params.put("gender", gender);
+                    params.put("class", standard);
+                    params.put("stream", stream);
+                    params.put("school", "RKM");
+                    params.put("address", "sohra");
+                    params.put("district", "East kahsi hills");
+                    params.put("pincode", "793004");
+                    params.put("userID", userId);
+                    return params;
+                }
+            };
 
-        RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+            RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(stringRequest);
+        }
     }
 
 }

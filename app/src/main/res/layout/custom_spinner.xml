@@ -10,6 +10,7 @@
     android:textSize="14sp"
     android:hint="Select gender"
     android:textColor="@color/gray"
+
     >
 
 </TextView>

@@ -69,7 +69,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
             //SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
             //VerifyOTP verifyOTP=new VerifyOTP();
             UploadImage uploadImage = new UploadImage();
-            fragmentTransaction.add(R.id.fragment_container, uploadImage, null);
+            fragmentTransaction.add(R.id.fragment_container, loGin, null);
             fragmentTransaction.commit();
 
         }
@@ -125,7 +125,6 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                     Toast.makeText(LoginRegistrationActivity.this,"Fialed",Toast.LENGTH_SHORT).show();
                     // updateUI(null);
                 }
-
             }
         });
     }

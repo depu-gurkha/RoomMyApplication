@@ -53,7 +53,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public class SignUpFirstPage extends Fragment {
+public class
+
+SignUpFirstPage extends Fragment {
     TextView tvSignin;
     TextInputLayout lFirstName, lLastName, lPhone, lEmail,lPwd,lConfirmPwd;
     EditText etEmail, etFstName, etLstName, etPhone,etPwd,etConfirmPwd;
@@ -146,7 +148,6 @@ public class SignUpFirstPage extends Fragment {
                 LoGin loGin = new LoGin();
                 fragmentTransaction.replace(R.id.fragment_container, loGin, null);
                 fragmentTransaction.commit();
-
                 Toast.makeText(getActivity(), "SignIn", Toast.LENGTH_SHORT).show();
             }
         };

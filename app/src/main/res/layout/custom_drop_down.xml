@@ -9,4 +9,5 @@
     android:layout_height="40dp"
     android:ellipsize="marquee"
     android:scrollbars="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true" />
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:textColor="@color/gray"/>

@@ -1,13 +1,14 @@
 package com.part.roommyapplication.Registration;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,55 +20,117 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.part.roommyapplication.R;
+import com.part.roommyapplication.config.RequestSingletonVolley;
+import com.part.roommyapplication.config.SharedPrefManager;
+import com.part.roommyapplication.library.VolleyMultipartRequest;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class UploadImage extends Fragment {
 
     ImageView pPhoto;
-    Button btnUpload,btnSelect;
+    Button btnUpload, btnSelect;
     private int STORAGE_PERMISSION_CODE = 1;
+    CardView cardSelect,cardUpload;
+
     public UploadImage() {
         // Required empty public constructor
     }
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_upload_image, container, false);
-        pPhoto=v.findViewById(R.id.ivPPhoto);
-        btnUpload=v.findViewById(R.id.btnUpload);
-        btnSelect=v.findViewById(R.id.btnSelect);
+        View v = inflater.inflate(R.layout.fragment_upload_image, container, false);
+        pPhoto = v.findViewById(R.id.ivPPhoto);
+        btnUpload = v.findViewById(R.id.btnUpload);
+        btnSelect = v.findViewById(R.id.btnSelect);
+        cardSelect=v.findViewById(R.id.cardSelect);
+        cardUpload=v.findViewById(R.id.crdUpload);
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveProfileAccount();
+                //Progress bar show
+                //hide Upload Button
+            }
+        });
         btnSelect.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Clicked" , Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    CropImage.startPickImageActivity(getContext(),UploadImage.this);
-                    Log.d("Crop Image",getActivity().toString());
+                    CropImage.startPickImageActivity(getContext(), UploadImage.this);
+                    Log.d("Crop Image", getActivity().toString());
 
                 } else {
+
+                    requestStoragePermission();
+
+                }
+
+            }
+        });
+        cardSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    CropImage.startPickImageActivity(getContext(), UploadImage.this);
+                    Log.d("Crop Image", getActivity().toString());
+
+                } else {
+
+                    requestStoragePermission();
+                }
+            }
+        });
+        cardUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    CropImage.startPickImageActivity(getContext(), UploadImage.this);
+                    Log.d("Crop Image", getActivity().toString());
+
+                } else {
+
                     requestStoragePermission();
                 }
             }
         });
         return v;
     }
+
     private void requestStoragePermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -78,7 +141,7 @@ public class UploadImage extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(getActivity(),
-                                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
                         }
                     })
                     .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -90,12 +153,13 @@ public class UploadImage extends Fragment {
                     .create().show();
         } else {
             ActivityCompat.requestPermissions(getActivity(),
-                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == STORAGE_PERMISSION_CODE)  {
+        if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getContext(), "Permission GRANTED", Toast.LENGTH_SHORT).show();
             } else {
@@ -108,7 +172,7 @@ public class UploadImage extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
         Log.d("OnActivity Called", String.valueOf(requestCode));
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
 
@@ -116,31 +180,126 @@ public class UploadImage extends Fragment {
             Log.d("RequestCode", String.valueOf(requestCode));
             Log.d("Result_ok", String.valueOf(requestCode));
 
-            if (resultCode ==getActivity().RESULT_OK) {
+            if (resultCode == getActivity().RESULT_OK) {
                 Log.d("Fired", String.valueOf(requestCode));
                 Uri path = CropImage.getPickImageResultUri(Objects.requireNonNull(getContext()), data);
-
                 startCrop(path);
-
 
             }
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode ==getActivity().RESULT_OK) {
-                Log.d("ForGlide",result.getUri().toString());
-                Glide.with(this).load(result.getUri()).into(pPhoto);
+            if (resultCode == getActivity().RESULT_OK) {
+                cardSelect.setVisibility(View.GONE);
+                cardUpload.setVisibility(View.VISIBLE);
+                Log.d("ForGlide", result.getUri().toString());
+                Glide.with(this).load(result.getUri()).override(379, 413).into(pPhoto);
 
             }
-
-
         }
     }
+
     private void startCrop(Uri imageUri) {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
-                .start(getContext(),this);
+                .start(getContext(), this);
     }
 
+    private void saveProfileAccount() {
+        // loading or check internet connection or something...
+        // ... then
+        String url = "https://classroom.rkmshillong.org/Authentication/upload";
+        String userId = String.valueOf(SharedPrefManager.getInstance(getActivity().getApplicationContext()).getUserId());
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                String resultResponse = new String(response.data);
+
+                try {
+
+                    JSONObject result = new JSONObject(resultResponse);
+                    String status = result.getString("status");
+                    String message = result.getString("message");
+//Constant.REQUEST_SUCCESS
+                    if (status.equals(1)) {
+                        // tell everybody you have succed upload image and post strings
+                        //Move to Dashboard
+                        Log.i("Messsage", message);
+                    } else {
+                        Log.i("Unexpected", message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                //Progress Bar hide
+                //Upload Button Show
+                //Display Message
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message+" Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message+ " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message+" Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("userID", userId);
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+                params.put("file", new DataPart("file_avatar.jpg", getFileDataFromDrawable( pPhoto.getDrawable()), "image/jpeg"));
+                // params.put("cover", new DataPart("file_cover.jpg", getFileDataFromDrawable(mCoverImage.getDrawable()), "image/jpeg"));
+
+                return params;
+            }
+        };
+
+        RequestSingletonVolley.getInstance(getContext()).addToRequestQueue(multipartRequest);
+    }
+
+    public static byte[] getFileDataFromDrawable( Drawable drawable) {
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
 }

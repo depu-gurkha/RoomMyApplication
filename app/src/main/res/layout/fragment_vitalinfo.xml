@@ -7,8 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,109 +23,149 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_margin="20dp"
             android:layout_marginTop="40dp"
-            android:orientation="vertical"
-            android:layout_gravity="center"
             android:gravity="center_vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
-                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                android:drawablePadding="20dp"
                 android:id="@+id/dtepicker"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Select Date of birth"
-                android:clickable="true"
-                android:textSize="14sp"
-                android:textColor="@color/light_gray"
-                android:padding="10dp"
                 android:layout_margin="10dp"
                 android:layout_marginVertical="30dp"
                 android:background="@drawable/textborder"
-                android:fontFamily="@font/roboto">
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Select Date of birth"
+                android:textColor="@color/light_gray"
+                android:textSize="14sp">
 
             </TextView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textborder"
                 android:layout_marginHorizontal="10dp"
-                android:orientation="horizontal"
-                android:layout_marginVertical="10dp">
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/textborder"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/person"
                     android:layout_gravity="center"
-                    android:scaleType="fitXY"
                     android:layout_weight="3"
                     android:paddingStart="5dp"
-                    >
+                    android:scaleType="fitXY"
+                    android:src="@drawable/person">
 
                 </ImageView>
+
                 <Spinner
 
                     android:id="@+id/sGender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_weight="7"
+                    android:background="@null"
                     android:entries="@array/Gender"
                     android:paddingStart="15dp"
                     android:spinnerMode="dialog"
-                    android:layout_weight="7"
-                    android:background="@null"
                     />
+                <ImageView
+                    android:id="@+id/ivGenderError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_error_outline_24"
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="10dp">
+                </ImageView>
+
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtGError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:text="Please Select Gender"
+
+                android:textSize="12sp"
+                android:visibility="visible"></TextView>
+
             <LinearLayout
-                android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textborder"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/textborder"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_baseline_laptop_chromebook_24"
                     android:layout_gravity="center"
-                    android:scaleType="fitXY"
                     android:layout_weight="3"
                     android:paddingStart="5dp"
-                    >
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_laptop_chromebook_24">
 
                 </ImageView>
 
-            <Spinner
+                <Spinner
 
-                android:id="@+id/sClass"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:entries="@array/classStudied"
-                android:padding="10dp"
-                android:spinnerMode="dialog"
+                    android:id="@+id/sClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="7"
+                    android:background="@null"
+                    android:entries="@array/classStudied"
+                    android:padding="10dp"
+                    android:spinnerMode="dialog">
 
-                android:background="@null"
-                android:layout_weight="7">
-
-            </Spinner>
+                </Spinner>
+                <ImageView
+                    android:id="@+id/ivClassError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_error_outline_24"
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="10dp">
+                </ImageView>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtCError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_error_outline_24"
+                android:paddingStart="10dp"
+                android:text="Please Select Gender"
+                android:textSize="12sp"
+                android:visibility="gone"></TextView>
+
             <LinearLayout
-                android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/textborder"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/textborder"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/stream"
                     android:layout_gravity="center"
-                    android:scaleType="fitXY"
                     android:layout_weight="3"
                     android:paddingStart="5dp"
-                    >
+                    android:scaleType="fitXY"
+                    android:src="@drawable/stream">
 
                 </ImageView>
 
@@ -134,7 +173,6 @@
                     android:id="@+id/sStream"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-
                     android:layout_weight="7"
                     android:background="@null"
                     android:entries="@array/stream"
@@ -142,21 +180,39 @@
                     android:spinnerMode="dialog">
 
                 </Spinner>
+                <ImageView
+                    android:id="@+id/ivStreamError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_error_outline_24"
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="10dp">
+                </ImageView>
             </LinearLayout>
+
             <TextView
-                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                android:drawablePadding="20dp"
+                android:id="@+id/txtSError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_error_outline_24"
+                android:paddingStart="10dp"
+                android:text="Please Select Gender"
+                android:visibility="gone"></TextView>
+
+            <TextView
                 android:id="@+id/txtSchool"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Ramakrishna Mission School Sohra"
-                android:clickable="true"
-                android:textSize="14sp"
-                android:padding="10dp"
                 android:layout_margin="10dp"
                 android:layout_marginVertical="30dp"
                 android:background="@drawable/textborder"
-                android:fontFamily="@font/roboto"></TextView>
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/roboto"
+                android:padding="10dp"
+                android:text="Ramakrishna Mission School Sohra"
+                android:textSize="14sp"></TextView>
 
             <Button
                 android:id="@+id/btn_signUp"

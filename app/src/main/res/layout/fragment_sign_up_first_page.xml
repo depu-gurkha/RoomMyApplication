@@ -284,8 +284,7 @@
                 android:text="Already Registered? Sign In"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:fontFamily="@font/raleway"
-               >
+                android:fontFamily="@font/raleway">
 
             </TextView>
 
