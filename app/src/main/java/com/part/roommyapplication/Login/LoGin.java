@@ -220,7 +220,7 @@ public class LoGin extends Fragment {
             public void onClick(View view) {
                 LoginRegistrationActivity activity = (LoginRegistrationActivity) getActivity();
                 if (activity instanceof LoginRegistrationActivity) {
-                    activity.signIn();
+                    activity.signIn(2);
                 }
             }
         });

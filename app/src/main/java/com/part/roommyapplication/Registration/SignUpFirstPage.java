@@ -61,7 +61,6 @@ SignUpFirstPage extends Fragment {
     EditText etEmail, etFstName, etLstName, etPhone,etPwd,etConfirmPwd;
     Button btnSignUp, btnGoogle;
     LoginButton btnFacebook;
-
     public FragmentManager fragmentManager;
     FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
@@ -85,7 +84,6 @@ SignUpFirstPage extends Fragment {
         lPwd=v.findViewById(R.id.lPassword);
         lConfirmPwd=v.findViewById(R.id.lConfirmPwd);
         etEmail = v.findViewById(R.id.email);
-
         etFstName = v.findViewById(R.id.fName);
         etLstName = v.findViewById(R.id.lName);
         etPhone = v.findViewById(R.id.phone);
@@ -126,7 +124,7 @@ SignUpFirstPage extends Fragment {
             public void onClick(View view) {
                 LoginRegistrationActivity activity = (LoginRegistrationActivity) getActivity();
                 if (activity instanceof LoginRegistrationActivity) {
-                    activity.signIn();
+                    activity.signIn(1);
                 }
             }
         });
@@ -226,6 +224,7 @@ SignUpFirstPage extends Fragment {
                             params.put("email", email);
                             params.put("phone", phone);
                             params.put("password", password);
+                            params.put("registerMode","AndroidApp");
                             return params;
                         }
                     };
@@ -258,6 +257,7 @@ SignUpFirstPage extends Fragment {
         Log.d("yoho", "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -266,14 +266,16 @@ SignUpFirstPage extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("yoho", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI();
+                            user.getEmail();
+                            user.getPhoneNumber();
+                           Log.d ("myuser",user.getProviderData().toString());
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI();
                         }
+                        updateUI();
 
                         // ...
                     }
