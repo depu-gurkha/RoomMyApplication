@@ -102,6 +102,7 @@ public class LoGin extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("onCreate",this.getClass().toString());
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         mAuth = FirebaseAuth.getInstance();
@@ -143,7 +144,7 @@ public class LoGin extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
+//                handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
             @Override
@@ -161,6 +162,7 @@ public class LoGin extends Fragment {
         String text = "Create a new Account SIGN UP";
         SpannableString sSignUp = new SpannableString(text);
         ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.BLUE);
+
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
@@ -323,11 +325,11 @@ public class LoGin extends Fragment {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser != null) {
-            updateUI();
-        }
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//
+//        if (currentUser != null) {
+//            updateUI();
+//        }
 //        updateUI(currentUser);
     }
 

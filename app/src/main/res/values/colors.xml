@@ -13,4 +13,5 @@
     <color name="bg_Color">#ecdaa3</color>
     <color name="gray">#808080</color>
     <color name="light_gray">#D3D3D3</color>
+    <color name="blue_gray">#87888E</color>
 </resources>

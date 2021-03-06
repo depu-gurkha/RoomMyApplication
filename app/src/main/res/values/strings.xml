@@ -30,4 +30,25 @@
         <item>Arts</item>
         <item>Commerce</item>
     </string-array>
+    <string-array name="District">
+        <item>Select District</item>
+        <item>West Jaintia Hills</item>
+        <item>East Jaintia Hills</item>
+        <item>East Khasi Hills</item>
+        <item>West Khasi Hills</item>
+        <item>South West Khasi Hills</item>
+        <item>Ri-Bhoi</item>
+        <item>North Garo Hills</item>
+        <item>East Garo Hills</item>
+        <item>South Garo Hills</item>
+        <item>West Garo Hills</item>
+        <item>South West Garo Hills</item>
+    </string-array>
+
+    <string-array name="Type">
+        <item>Select Type</item>
+        <item>Co-Education</item>
+        <item>Girls Only</item>
+        <item>Boys Only</item>
+    </string-array>
 </resources>

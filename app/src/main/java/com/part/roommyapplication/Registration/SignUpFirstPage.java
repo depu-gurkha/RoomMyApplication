@@ -1,3 +1,5 @@
+
+
 package com.part.roommyapplication.Registration;
 import android.content.Intent;
 import android.graphics.Color;
@@ -98,7 +100,6 @@ SignUpFirstPage extends Fragment {
             @Override
             public void onClick(View view) {
                 etFstName.setError(null);
-
             }
         });
         btnFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -125,6 +126,7 @@ SignUpFirstPage extends Fragment {
                 LoginRegistrationActivity activity = (LoginRegistrationActivity) getActivity();
                 if (activity instanceof LoginRegistrationActivity) {
                     activity.signIn(1);
+
                 }
             }
         });
@@ -189,19 +191,41 @@ SignUpFirstPage extends Fragment {
                                         JSONObject obj = new JSONObject(response);
                                         Log.d("Server Response", obj.toString());
                                         //if no error in response
+
                                         if (obj.getInt("success") == 1) {
-                                            Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                                            Log.d("InSideSuccess","Success");
+//                                            Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                                             fragmentManager = getFragmentManager();
                                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                            VerifyOTP verifyOTP = new VerifyOTP();
-                                            fragmentTransaction.replace(R.id.fragment_container, verifyOTP, null);
-                                            fragmentTransaction.commit();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("Phone", phone);
-                                            verifyOTP.setArguments(bundle);
+                                            Log.d("Stage",String.valueOf(obj.getInt(
+                                                    "registrationStage")));
+                                            Log.d("inside Switch","helo");
+                                            switch (obj.getInt("registrationStage")){
+
+                                                case 1:
+                                                    VerifyOTP verifyOTP = new VerifyOTP();
+                                                    fragmentTransaction.replace(R.id.fragment_container, verifyOTP, null);
+                                                    fragmentTransaction.commit();
+                                                    break;
+                                                case 2:
+                                                    Vitalinfo vitalinfo = new Vitalinfo();
+                                                    fragmentTransaction.replace(R.id.fragment_container, vitalinfo, null);
+                                                    fragmentTransaction.commit();
+                                                    break;
+                                                case 4:
+                                                    UploadImage uploadImage = new UploadImage();
+                                                    fragmentTransaction.replace(R.id.fragment_container,uploadImage, null);
+                                                    fragmentTransaction.commit();
+                                                    break;
+                                            }
+
+//                                            Bundle bundle = new Bundle();
+//                                            bundle.putString("Phone", phone);
+//                                            verifyOTP.setArguments(bundle);
                                             int userId = obj.getInt("userID");
                                             Log.d("userId", String.valueOf(userId));
                                             SharedPrefManager.getInstance(getActivity().getApplicationContext()).setUserId(userId);
+                                            SharedPrefManager.getInstance(getActivity().getApplicationContext()).setUserPhone(phone);
                                         } else {
                                             Toast.makeText(getActivity().getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                                         }

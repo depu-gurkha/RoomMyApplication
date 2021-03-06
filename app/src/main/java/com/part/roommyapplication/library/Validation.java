@@ -106,5 +106,23 @@ public class Validation {
             return true;
         }
     }
+    public static boolean isValidPincode(TextInputLayout textInputLayout,String message){
+        String check="^[0-9]{6}$";
+        String strpass=textInputLayout.getEditText().getText().toString().trim();
+        if(strpass.isEmpty()){
+            textInputLayout.setErrorIconDrawable(R.drawable.ic_baseline_error_outline_24);
+            textInputLayout.setError(message);
+            return false;
+        }
+        else if(!strpass.matches(check)){
+            textInputLayout.setErrorIconDrawable(R.drawable.ic_baseline_error_outline_24);
+            textInputLayout.setError(message);
+            return false;
+        }else
+        {
+            textInputLayout.setError(null);
+            return true;
+        }
+    }
 
 }

@@ -22,6 +22,7 @@ public class SharedPrefManager {
         private static final String REFRESH_TOKEN="refreshToken";
         private static final String TOKEN_EXPIRY="tokenExpiry";
         private static final String USER_ID="userid";
+        private static  final String USER_PHONE="phone";
 
 
         private static SharedPrefManager mInstance;// Shared Preference Instance
@@ -54,12 +55,24 @@ public class SharedPrefManager {
             editor.apply();
         }
 
+    // Setting userPhonefor vital information use
+    public void setUserPhone(String phone){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(USER_PHONE,phone);
+        editor.apply();
+    }
+
     //Getting the url
 
         public int  getUserId(){
             SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
             return sharedPreferences.getInt(USER_ID,0);
         }
+    public String  getUserPhone(){
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(USER_PHONE,"");
+    }
 
         //Getting the url
 
