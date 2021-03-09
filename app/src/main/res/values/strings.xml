@@ -51,4 +51,27 @@
         <item>Girls Only</item>
         <item>Boys Only</item>
     </string-array>
+    <string name="aboutHikai">
+
+\tThe Hybrid Interactive Knowledge Assimilation Initiative (HIKAI) being launched by Ramakrishna Mission to provide structured curriculum as per the Board syllabus to all school-going students in Meghalaya. You are aware that the schools are not allowed to function in normal mode by the Government fearing community spread of COVID19.\n
+        \tSo, the two centres of the Ramakrishna Mission in Meghalaya viz, the Sohra (Cherrapunjee) centre and the Shillong centre are combining their expertise to provide education through an innovative the Hybrid Interactive Knowledge Assimilation Initiative (HIKAI) from 17 August 2020 for any student in Meghalaya, who wants to use this facility. To begin with we are launching the program for classes IX to XII.
+    </string>
+    <string name="group1">Group1</string>
+    <string name="group2">Group2</string>
+    <string name="group3">Group3</string>
+    <string name="group4">Group4</string>
+    <string-array name="group1">
+        <item>Item1</item>
+    </string-array>
+    <string-array name="group2">
+        <item>Item1</item>
+    </string-array>
+    <string-array name="group3">
+        <item>Item1</item>
+    </string-array>
+    <string-array name="group4">
+        <item>Item1</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

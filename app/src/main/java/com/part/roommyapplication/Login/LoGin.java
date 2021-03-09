@@ -48,7 +48,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.part.roommyapplication.Dashboard;
+import com.part.roommyapplication.dashboardpackage.Dashboard;
 import com.part.roommyapplication.ForgotPassword;
 import com.part.roommyapplication.LoginRegistrationActivity;
 import com.part.roommyapplication.R;

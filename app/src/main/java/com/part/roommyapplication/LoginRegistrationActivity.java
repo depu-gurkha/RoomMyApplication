@@ -31,12 +31,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.part.roommyapplication.Login.LoGin;
+import com.part.roommyapplication.Registration.SignUpFirstPage;
 import com.part.roommyapplication.Registration.UploadImage;
 import com.part.roommyapplication.Registration.VerifyOTP;
 import com.part.roommyapplication.Registration.Vitalinfo;
 import com.part.roommyapplication.config.RequestSingletonVolley;
 import com.part.roommyapplication.config.SharedPrefManager;
 import com.part.roommyapplication.config.URLs;
+import com.part.roommyapplication.dashboardpackage.Dashboard;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +61,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         Log.d("onCreate",this.getClass().toString());
         //Making the activity full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -80,11 +82,18 @@ public class LoginRegistrationActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             LoGin loGin = new LoGin();
             Vitalinfo vitalinfo = new Vitalinfo();
-            //SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
+            SignUpFirstPage signUpFirstFragment=new SignUpFirstPage();
+            int page=getIntent().getIntExtra("ComingFrom",0);
+            if(page==0){
+                fragmentTransaction.add(R.id.fragment_container, loGin, null);
+                fragmentTransaction.commit();
+            }else{
+                fragmentTransaction.add(R.id.fragment_container, signUpFirstFragment, null);
+                fragmentTransaction.commit();
+            }
             //VerifyOTP verifyOTP=new VerifyOTP();
             UploadImage uploadImage = new UploadImage();
-            fragmentTransaction.add(R.id.fragment_container, loGin, null);
-            fragmentTransaction.commit();
+
 
         }
     }
@@ -253,7 +262,7 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                             //if no error in response
                             Log.d("Server Response", String.valueOf(obj.getInt("success")));
                             if (obj.getInt("success") == 1) {
-                               Intent intent =new Intent(getApplicationContext(),Dashboard.class);
+                               Intent intent =new Intent(getApplicationContext(), Dashboard.class);
                                startActivity(intent);
 
                             } else {

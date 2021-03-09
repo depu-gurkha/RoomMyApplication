@@ -28,6 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent"
+            android:scaleX=".50"
+            android:scaleY=".50"
             android:layout_marginLeft="10dp"/>
 
         <Space
